@@ -1,0 +1,4 @@
+storeFile=android/app/keystore.jks
+storePassword=chefs123456
+keyPassword=chefs123456
+keyAlias=chefs

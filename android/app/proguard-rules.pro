@@ -1,0 +1,3 @@
+-keep class com.baseflow.permissionhandler.** { *; }
+-keep class com.shop.tecno.** { *; }
+-dontwarn com.shop.tecno.**

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "513115969703",
+    "project_id": "barawy-87111",
+    "storage_bucket": "barawy-87111.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:513115969703:android:7229af62ac5c758e0da382",
+        "android_client_info": {
+          "package_name": "com.shop.tecno"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDD-ii4_gHu3BzZCaWgbk-2OMS4uIIvdKA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
