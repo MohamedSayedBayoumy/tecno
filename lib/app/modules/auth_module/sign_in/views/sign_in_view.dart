@@ -29,7 +29,7 @@ class SignInView extends GetView<SignInController> {
                 child: const Column(
                   children: [
                     CustomAssetsImage(
-                      imagePath: Assets.assetsImagesNewVersionEdit01,
+                      imagePath: "assets/images/applogo.png",
                       width: 250,
                     ),
                     SizedBox(height: 30),

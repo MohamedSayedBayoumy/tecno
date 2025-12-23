@@ -40,7 +40,6 @@ App Uses Non-Exempt Encryption</key>
 
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We need access to your location to show nearby stores</string>
-
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>We need continuous access to your location to track orders during delivery</string>
 	<key>NSPhotoLibraryUsageDescription</key>

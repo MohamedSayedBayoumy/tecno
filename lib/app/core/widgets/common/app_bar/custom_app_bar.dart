@@ -67,13 +67,17 @@ class CustomAppBar extends StatelessWidget {
                     onTap: () {
                       Get.find<HomeController>().getData();
                     },
-                    child: const FittedBox(
+                    child: FittedBox(
                       fit: BoxFit.scaleDown,
                       alignment: AlignmentDirectional.center,
-                      child: CustomAssetsImage(
-                        imagePath: Assets.assetsImagesNewVersionEdit01,
-                        width: 100,
-                        height: 40,
+                      child: Transform.scale(
+                        scale: 1.5,
+                        alignment: Alignment.center,
+                        child: const CustomAssetsImage(
+                          imagePath: "assets/images/applogo.png",
+                          width: 100,
+                          height: 40,
+                        ),
                       ),
                     ),
                   ),

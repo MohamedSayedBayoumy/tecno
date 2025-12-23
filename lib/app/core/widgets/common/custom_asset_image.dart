@@ -16,6 +16,7 @@ class CustomAssetsImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     if (imagePath.toString().endsWith("svg")) {
       return FadeIn(
         child: SvgPicture.asset(

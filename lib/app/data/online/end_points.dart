@@ -1,4 +1,5 @@
 class EndPoints {
+  String branches = '/branches';
   String categories = '/categories';
   String subCategories = '/sub-categories';
   String subCategoryProducts = '/category-products';

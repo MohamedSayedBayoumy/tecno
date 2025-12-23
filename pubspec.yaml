@@ -78,6 +78,8 @@ dependencies:
   firebase_core: any
   firebase_messaging: any
   flutter_local_notifications: ^19.4.1
+  image_picker: 
+  file_picker:
 
  
 dependency_overrides:

@@ -17,7 +17,6 @@ import '../controllers/home_controller.dart';
 import '../widgets/explore_more_widget.dart';
 import '../widgets/product_item_widget.dart';
 import '../widgets/search_bar_widget.dart';
-import '../widgets/user_location_widget.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -49,7 +48,7 @@ class HomeView extends GetView<HomeController> {
                     sizer(),
                     const SearchBarWidget(),
                     sizer(),
-                    const UserLocationWidget(),
+                    // const UserLocationWidget(),
                     sizer(),
                     Expanded(
                       child: ListView(
@@ -124,7 +123,7 @@ class HomeView extends GetView<HomeController> {
     final sliders = controller.home.value?.sliders ?? [];
     return CarouselSlider(
       options: CarouselOptions(
-        height: kToolbarHeight * 4,
+        height: kToolbarHeight * 3,
         aspectRatio: 1.0,
         enlargeCenterPage: true,
         viewportFraction: 1,
@@ -146,7 +145,7 @@ class HomeView extends GetView<HomeController> {
                 borderRadius: BorderRadius.circular(10),
                 child: CachedNetworkImage(
                   imageUrl: e.photo!,
-                  fit: BoxFit.contain,
+                  fit: BoxFit.fill,
                   alignment: Alignment.topCenter,
                   placeholder: (context, url) => Container(
                     color: Colors.grey[200],
@@ -297,7 +296,6 @@ class HomeView extends GetView<HomeController> {
           children: [
             Expanded(child: sectionHeader(text: 'brands'.tr)),
             TextButton(
-              
               onPressed: () {
                 Get.toNamed(Routes.brands);
               },

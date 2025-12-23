@@ -31,6 +31,7 @@ class CustomTextFormFieldWidget extends StatefulWidget {
   final String? titleIcon;
   final bool? disableText;
   final Widget? subtitle;
+  final int? maxLength;
 
   const CustomTextFormFieldWidget({
     super.key,
@@ -62,6 +63,7 @@ class CustomTextFormFieldWidget extends StatefulWidget {
     this.titleColor,
     this.disableText = false,
     this.subtitle,
+    this.maxLength,
   });
 
   @override
@@ -137,6 +139,7 @@ class _CustomTextFormFieldWidgetState extends State<CustomTextFormFieldWidget> {
           obscureText: widget.obscure ?? false,
           onChanged: widget.action,
           style: Styles.styleMedium15,
+          maxLength: widget.maxLength,
           inputFormatters: widget.disableText == true
               ? [
                   FilteringTextInputFormatter.digitsOnly,

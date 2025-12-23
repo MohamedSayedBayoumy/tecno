@@ -2,15 +2,17 @@ import 'package:customer/app/data/online/DioRequest.dart';
 import 'package:customer/app/data/online/end_points.dart';
 import 'package:customer/app/data/online/state_handler.dart';
 import 'package:customer/app/routes/app_pages.dart';
+import 'package:dio/dio.dart' as dioData;
 import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' as getData;
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/enum.dart';
 import '../../../../core/services/firebase_messaging.dart';
+import '../../../../core/services/pick_image_file_services.dart';
 import '../../../../data/local/auth_info.dart';
 
-class RegisterController extends GetxController {
+class RegisterController extends getData.GetxController {
   final formKey = GlobalKey<FormState>();
   String? fName,
       lName,
@@ -18,11 +20,21 @@ class RegisterController extends GetxController {
       phone,
       password,
       passwordConfirmation,
-      countryCode;
+      countryCode,
+      address;
 
   TextEditingController phoneController = TextEditingController();
+  TextEditingController businessNumberController = TextEditingController();
+  TextEditingController taxNumberController = TextEditingController();
+
+  PickedImageFile? commercialRegisterImage;
+  PickedImageFile? taxNumberImage;
+  PickedImageFile? addressImage;
 
   Status status = Status.loaded;
+  Status branchesStatus = Status.loading;
+  String? errorMessage;
+
   bool obscure = false;
   void toggleObscure() {
     obscure = !obscure;
@@ -36,17 +48,53 @@ class RegisterController extends GetxController {
 
       FirebaseNotificationServices.getFcmToken(
         (p0) async {
-          final response =
-              await postRequest(urlExt: EndPoints().register, data: {
-            "email": email,
-            "first_name": fName,
-            "last_name": lName,
+          // Build files list only for selected images to avoid errors.
+          final List<dioData.MultipartFile> files = [];
+          if (commercialRegisterImage != null) {
+            files.add(
+              await dioData.MultipartFile.fromFile(
+                commercialRegisterImage!.path,
+                filename: commercialRegisterImage!.name,
+              ),
+            );
+          }
+          if (taxNumberImage != null) {
+            files.add(
+              await dioData.MultipartFile.fromFile(
+                taxNumberImage!.path,
+                filename: taxNumberImage!.name,
+              ),
+            );
+          }
+
+          if (addressImage != null) {
+            files.add(
+              await dioData.MultipartFile.fromFile(
+                addressImage!.path,
+                filename: addressImage!.name,
+              ),
+            );
+          }
+
+          final Map<String, dynamic> data = {
+            if (files.isNotEmpty) 'files': files,
+            'email': email,
             "phone":
                 int.parse("${countryCode ?? "+20"}${phoneController.text}"),
-            "password": password,
-            "password_confirmation": passwordConfirmation,
-            "fcm_token": p0
-          });
+            'password': password,
+            'business_name': fName,
+            'address': address,
+            'branch_id': '110',
+            'business_registeration_number': businessNumberController.text,
+            'tax_id': taxNumberController.text,
+            'fcm_token': p0,
+          };
+
+          final response = await postRequest(
+            urlExt: EndPoints().register,
+            data: data,
+            isJson: false,
+          );
           print(response);
           if (response.data['status']) {
             status = Status.loaded;
@@ -61,15 +109,15 @@ class RegisterController extends GetxController {
               //   Get.offAndToNamed(Routes.SIGN_IN);
               // }, 'تأكيد'.tr, "تم ارسال بريد الكتروني اليك لتأكيد حسابك",false);
               // controller.getProfile();
-              Get.offAndToNamed(Routes.SIGN_IN);
+              getData.Get.offAndToNamed(Routes.SIGN_IN);
             } catch (e) {}
             status = Status.loaded;
             update();
           } else {
             status = Status.fail;
             update();
-            areYouSure(Get.context!, () => Get.back(), 'Failed'.tr,
-                response.data['message'], true);
+            areYouSure(getData.Get.context!, () => getData.Get.back(),
+                'Failed'.tr, response.data['message'], true);
           }
         },
       );
@@ -82,6 +130,35 @@ class RegisterController extends GetxController {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
       throw 'Could not launch $url';
+    }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    getBranches();
+  }
+
+  getBranches() async {
+    try {
+      branchesStatus = Status.loading;
+      update();
+      final response = await getRequest(urlExt: EndPoints().branches);
+      print(response.data);
+      if (response.data['status']) {
+        branchesStatus = Status.loaded;
+        update();
+      } else {
+        branchesStatus = Status.fail;
+        update();
+        areYouSure(getData.Get.context!, () => getData.Get.back(), 'Failed'.tr,
+            response.data['message'], true);
+      }
+    } on dioData.DioException catch (e) {
+      print(e.response?.data);
+      branchesStatus = Status.fail;
+ 
+      update();
     }
   }
 }

@@ -4,6 +4,12 @@ class Assets {
   
   static const String assetsImagesNewVersionBasilMapLocationSolid = "assets/images/new_version/basil_map-location-solid.png";
 
+  static const String assetsImagesNewVersionContractRegister = "assets/images/new_version/contract_register.png";
+
+  static const String assetsImagesNewVersionDocument = "assets/images/new_version/document.png";
+
+  static const String assetsImagesNewVersionEmailRegister = "assets/images/new_version/email_register.png";
+
   static const String assetsImagesNewVersionBell = "assets/images/new_version/bell.png";
 
   static const String assetsImagesNewVersionCategories = "assets/images/new_version/categories.png";
@@ -24,6 +30,8 @@ class Assets {
 
   static const String assetsImagesNewVersionFluentLocation24Filled = "assets/images/new_version/fluent_location-24-filled.png";
 
+  static const String assetsImagesNewVersionHomeRegister = "assets/images/new_version/home_register.png";
+
   static const String assetsImagesNewVersionFrame = "assets/images/new_version/Frame.png";
 
   static const String assetsImagesNewVersionHeart = "assets/images/new_version/heart.png";
@@ -41,6 +49,8 @@ class Assets {
   static const String assetsImagesNewVersionIcOutlinePrivacyTip = "assets/images/new_version/ic_outline-privacy-tip.png";
 
   static const String assetsImagesNewVersionIconoirLanguage = "assets/images/new_version/iconoir_language.png";
+
+  static const String assetsImagesNewVersionIdCard = "assets/images/new_version/id-card.png";
 
   static const String assetsImagesNewVersionLineMdPhoneCallLoop = "assets/images/new_version/line-md_phone-call-loop.png";
 
@@ -62,6 +72,8 @@ class Assets {
 
   static const String assetsImagesNewVersionPerson = "assets/images/new_version/person.png";
 
+  static const String assetsImagesNewVersionPadlockRegister = "assets/images/new_version/padlock_register.png";
+
   static const String assetsImagesNewVersionPin = "assets/images/new_version/pin.png";
 
   static const String assetsImagesNewVersionRafiki = "assets/images/new_version/rafiki.png";
@@ -75,6 +87,10 @@ class Assets {
   static const String assetsImagesNewVersionStreamlineUltimateRatingStarRibbon = "assets/images/new_version/streamline-ultimate_rating-star-ribbon.png";
 
   static const String assetsImagesNewVersionUser = "assets/images/new_version/user.png";
+
+  static const String assetsImagesNewVersionUserRegister = "assets/images/new_version/user_register.png";
+
+  static const String assetsImagesNewVersionSmartphone = "assets/images/new_version/smartphone.png";
 
   static const String assetsImagesNewVersionVector = "assets/images/new_version/Vector.png";
 
