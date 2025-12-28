@@ -19,6 +19,7 @@ class DioRequest {
   static Dio? dioWithToken;
 
   static void createDioInstance(String? token) {
+    print(">>>>>>>> token $token");
     dioWithToken = Dio(BaseOptions(
       baseUrl: apiUrl,
       headers: {

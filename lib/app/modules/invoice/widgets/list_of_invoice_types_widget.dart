@@ -11,27 +11,30 @@ class ListOfInvoicesTypesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<InvoiceController>(
       builder: (controller) {
-        return SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              InvoicesTypeWidget(
-                isSelected: controller.selectedInvoiceType == "all",
-                title: "all",
-              ),
-              const SizedBox(width: 10),
-              InvoicesTypeWidget(
-                isSelected: controller.selectedInvoiceType == "bills",
-                imagePath: 'assets/images/invoice.png',
-                title: "bills",
-              ),
-              const SizedBox(width: 10),
-              InvoicesTypeWidget(
-                isSelected: controller.selectedInvoiceType == "payments",
-                imagePath: 'assets/images/invoice.png',
-                title: "payments",
-              ),
-            ],
+        return Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                InvoicesTypeWidget(
+                  isSelected: controller.selectedInvoiceType == "all",
+                  title: "all",
+                ),
+                const SizedBox(width: 10),
+                InvoicesTypeWidget(
+                  isSelected: controller.selectedInvoiceType == "bills",
+                  imagePath: 'assets/images/invoice.png',
+                  title: "bills",
+                ),
+                const SizedBox(width: 10),
+                InvoicesTypeWidget(
+                  isSelected: controller.selectedInvoiceType == "payments",
+                  imagePath: 'assets/images/invoice.png',
+                  title: "payments",
+                ),
+              ],
+            ),
           ),
         );
       },

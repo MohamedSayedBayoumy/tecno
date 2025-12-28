@@ -13,6 +13,7 @@ import '../../../../core/widgets/common/custom_screen_padding.dart';
 import '../../../../core/widgets/inputs/custom_phone_field.dart';
 import '../../../../core/widgets/inputs/custom_text_form_field.dart';
 import '../controllers/register_controller.dart';
+import 'branchs_widget.dart';
 import 'docs_form_widget.dart';
 
 class RegisterFormWidget extends StatelessWidget {
@@ -37,12 +38,31 @@ class RegisterFormWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 30),
                 // Institution name field
+
                 CustomTextFormFieldWidget(
-                  title: 'institution_name'.tr,
+                  title: 'First Name'.tr,
                   action: (v) => controller.fName = v,
                   isEmail: false,
                   titleColor: AppColors.grey,
+                  titleIcon: Assets.assetsImagesNewVersionPerson,
+                ),
+                const SizedBox(height: 20),
+                CustomTextFormFieldWidget(
+                  title: 'Last Name'.tr,
+                  action: (v) => controller.lName = v,
+                  isEmail: false,
+                  titleColor: AppColors.grey,
+                  titleIcon: Assets.assetsImagesNewVersionPerson,
+                ),
+                const SizedBox(height: 20),
+
+                CustomTextFormFieldWidget(
+                  title: 'institution_name'.tr,
+                  action: (v) => controller.businessNameController.text = v,
+                  isEmail: false,
+                  titleColor: AppColors.grey,
                   titleIcon: Assets.assetsImagesNewVersionUserRegister,
+                  controller: controller.businessNameController,
                 ),
                 const SizedBox(height: 20),
                 // Phone number field (keep as is)
@@ -73,13 +93,9 @@ class RegisterFormWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 // Branch field
-                CustomTextFormFieldWidget(
-                  title: 'branch'.tr,
-                  action: (v) => controller.lName = v,
-                  isEmail: false,
-                  titleColor: AppColors.grey,
-                  titleIcon: Assets.assetsImagesNewVersionHomeRegister,
-                ),
+
+                BranchesWidget(),
+
                 const SizedBox(height: 20),
                 // Password field
                 CustomTextFormFieldWidget(

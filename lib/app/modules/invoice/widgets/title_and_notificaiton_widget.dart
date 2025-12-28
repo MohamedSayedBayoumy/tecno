@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/styles.dart';
 import '../../../core/widgets/common/custom_asset_image.dart';
+import '../../../routes/app_pages.dart';
 
 class TitleAndNotificationWidget extends StatelessWidget {
   const TitleAndNotificationWidget({
@@ -19,10 +20,15 @@ class TitleAndNotificationWidget extends StatelessWidget {
           'Invoices'.tr,
           style: Styles.styleBold18.copyWith(color: mainColor),
         )),
-        const CustomAssetsImage(
-          imagePath: 'assets/images/notification_icons.png',
-          width: 50,
-          height: 50,
+        InkWell(
+          onTap: () {
+            Get.toNamed(Routes.notification);
+          },
+          child: const CustomAssetsImage(
+            imagePath: 'assets/images/notification_icons.png',
+            width: 50,
+            height: 50,
+          ),
         ),
       ],
     );

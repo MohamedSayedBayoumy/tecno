@@ -21,23 +21,23 @@ class AllTransactionsHeaderWidget extends StatelessWidget {
               style: Styles.styleBold18.copyWith(color: mainColor),
             ),
           ),
-          Expanded(
-            child: InkWell(
-              onTap: () {},
-              overlayColor: const WidgetStatePropertyAll(Colors.transparent),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    "all_transactions".tr,
-                    style: Styles.styleRegular13.copyWith(color: mainColor),
-                  ),
-                  const SizedBox(width: 5),
-                  Icon(Icons.arrow_forward_ios, size: 15, color: mainColor),
-                ],
-              ),
-            ),
-          ),
+          // Expanded(
+          //   child: InkWell(
+          //     onTap: () {},
+          //     overlayColor: const WidgetStatePropertyAll(Colors.transparent),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.end,
+          //       children: [
+          //         Text(
+          //           "all_transactions".tr,
+          //           style: Styles.styleRegular13.copyWith(color: mainColor),
+          //         ),
+          //         const SizedBox(width: 5),
+          //         Icon(Icons.arrow_forward_ios, size: 15, color: mainColor),
+          //       ],
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

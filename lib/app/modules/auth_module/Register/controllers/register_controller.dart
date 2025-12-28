@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:customer/app/data/online/DioRequest.dart';
 import 'package:customer/app/data/online/end_points.dart';
 import 'package:customer/app/data/online/state_handler.dart';
@@ -8,9 +10,11 @@ import 'package:get/get.dart' as getData;
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/enum.dart';
+import '../../../../core/services/compse_files.dart';
 import '../../../../core/services/firebase_messaging.dart';
 import '../../../../core/services/pick_image_file_services.dart';
 import '../../../../data/local/auth_info.dart';
+import '../models/branch_model.dart';
 
 class RegisterController extends getData.GetxController {
   final formKey = GlobalKey<FormState>();
@@ -21,12 +25,12 @@ class RegisterController extends getData.GetxController {
       password,
       passwordConfirmation,
       countryCode,
-      address;
+      address ;
 
   TextEditingController phoneController = TextEditingController();
   TextEditingController businessNumberController = TextEditingController();
   TextEditingController taxNumberController = TextEditingController();
-
+  TextEditingController businessNameController = TextEditingController();
   PickedImageFile? commercialRegisterImage;
   PickedImageFile? taxNumberImage;
   PickedImageFile? addressImage;
@@ -51,40 +55,49 @@ class RegisterController extends getData.GetxController {
           // Build files list only for selected images to avoid errors.
           final List<dioData.MultipartFile> files = [];
           if (commercialRegisterImage != null) {
+            final compressedFile = await UniversalCompressor()
+                .compress(File(commercialRegisterImage!.path));
             files.add(
               await dioData.MultipartFile.fromFile(
-                commercialRegisterImage!.path,
-                filename: commercialRegisterImage!.name,
+                compressedFile.file.path,
+                filename: compressedFile.file.name,
               ),
             );
           }
           if (taxNumberImage != null) {
+            final compressedFile = await UniversalCompressor()
+                .compress(File(commercialRegisterImage!.path));
             files.add(
               await dioData.MultipartFile.fromFile(
-                taxNumberImage!.path,
-                filename: taxNumberImage!.name,
+                compressedFile.file.path,
+                filename: compressedFile.file.name,
               ),
             );
           }
 
           if (addressImage != null) {
+            final compressedFile =
+                await UniversalCompressor().compress(File(addressImage!.path));
             files.add(
               await dioData.MultipartFile.fromFile(
-                addressImage!.path,
-                filename: addressImage!.name,
+                compressedFile.file.path,
+                filename: compressedFile.file.name,
               ),
             );
           }
 
           final Map<String, dynamic> data = {
             if (files.isNotEmpty) 'files': files,
+            "first_name": fName,
+            "last_name": lName,
             'email': email,
             "phone":
                 int.parse("${countryCode ?? "+20"}${phoneController.text}"),
             'password': password,
-            'business_name': fName,
+            'password_confirmation': passwordConfirmation,
+            'business_name': businessNameController.text,
             'address': address,
-            'branch_id': '110',
+            'branch_id': selectedBranch?.id,
             'business_registeration_number': businessNumberController.text,
             'tax_id': taxNumberController.text,
             'fcm_token': p0,
@@ -139,13 +152,18 @@ class RegisterController extends getData.GetxController {
     getBranches();
   }
 
+  BranchesResponse? branchesResponse;
+  BranchRegisterModel? selectedBranch;
+
   getBranches() async {
     try {
       branchesStatus = Status.loading;
       update();
       final response = await getRequest(urlExt: EndPoints().branches);
       print(response.data);
+
       if (response.data['status']) {
+        branchesResponse = BranchesResponse.fromJson(response.data);
         branchesStatus = Status.loaded;
         update();
       } else {
@@ -157,7 +175,7 @@ class RegisterController extends getData.GetxController {
     } on dioData.DioException catch (e) {
       print(e.response?.data);
       branchesStatus = Status.fail;
- 
+
       update();
     }
   }

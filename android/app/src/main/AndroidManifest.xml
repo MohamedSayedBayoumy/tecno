@@ -41,7 +41,7 @@
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:label="tecno">
+        android:label="Tecno">
 
         <!-- Google Maps API Key -->
         <meta-data
