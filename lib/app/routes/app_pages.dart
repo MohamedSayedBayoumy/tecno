@@ -31,6 +31,7 @@ import '../modules/checkOut/bindings/check_out_binding.dart';
 import '../modules/checkOut/views/check_out_view.dart';
 import '../modules/forgot_password/bindings/forgot_password_binding.dart';
 import '../modules/forgot_password/views/passwords_fields.dart';
+import '../modules/invoice/bindings/invoice_binding.dart';
 import '../modules/notification/bindings/notification_binding.dart';
 import '../modules/notification/views/notification_view.dart';
 import '../modules/order_module/order_details/views/cancel_order_view.dart';
@@ -114,6 +115,7 @@ class AppPages {
           page: () => const ItemDetailsView(),
           bindings: [
             HomeBinding(),
+            InvoiceBinding(),
             CheckOutBinding(),
             CartBinding(),
             ItemDetailsBinding()
@@ -275,9 +277,10 @@ class AppPages {
           page: () => const BottomSheetScreen(),
           bindings: [
             HomeBinding(),
+            InvoiceBinding(),
             OrdersBinding(),
             CartBinding(),
-            OffersBinding(),
+            // OffersBinding(),
             CategoriesBinding(),
             AccountBinding(),
           ],

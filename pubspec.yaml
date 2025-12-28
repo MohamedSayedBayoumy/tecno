@@ -138,13 +138,13 @@ flutter:
   fonts:
     - family: ar_family
       fonts:
-        - asset: assets/fonts/Tajawal-Regular.ttf
+        - asset: assets/fonts/Cairo/Cairo-Regular.ttf
           weight: 400
-        - asset: assets/fonts/Tajawal-Medium.ttf
+        - asset: assets/fonts/Cairo/Cairo-Medium.ttf
           weight: 500
-        - asset: assets/fonts/Tajawal-Bold.ttf
+        - asset: assets/fonts/Cairo/Cairo-Bold.ttf
           weight: 700
-        - asset: assets/fonts/Tajawal-ExtraBold.ttf
+        - asset: assets/fonts/Cairo/Cairo-ExtraBold.ttf
           weight: 800
     - family: en_family
       fonts:

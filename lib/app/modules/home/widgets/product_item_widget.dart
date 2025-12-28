@@ -42,7 +42,7 @@ class ProductItemWidget extends StatelessWidget {
               Stack(
                 children: [
                   Container(
-                    height: 200,
+                    height: 180,
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(
                         Radius.circular(AppSizes.borderRadius),
@@ -84,36 +84,20 @@ class ProductItemWidget extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 4),
-                    Text(
-                      item.sortDetails ?? "",
-                      style: TextStyle(color: Colors.grey[700], fontSize: 12),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 6),
+                    if (item.sortDetails?.isNotEmpty ?? false) ...[
+                      Text(
+                        item.sortDetails ?? "",
+                        style: TextStyle(color: Colors.grey[700], fontSize: 12),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 6),
+                    ],
                     Text(
                       '${item.previousPrice == 0 ? item.price : item.previousPrice} ${Config().currency}',
                       maxLines: 1,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 4),
-                    // Row(
-                    //   children: [
-                    //     ...List.generate(
-                    //       4,
-                    //       (_) => const Icon(Icons.star,
-                    //           color: Colors.amber, size: 16),
-                    //     ),
-                    //     const Icon(Icons.star_border,
-                    //         color: Colors.grey, size: 16),
-                    //     const SizedBox(width: 4),
-                    //     Text(
-                    //       "5",
-                    //       style:
-                    //           TextStyle(fontSize: 12, color: Colors.grey[600]),
-                    //     )
-                    //   ],
-                    // ),
                   ],
                 ),
               )

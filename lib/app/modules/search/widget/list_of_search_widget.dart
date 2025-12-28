@@ -29,7 +29,7 @@ class ListOfSearchWidget extends StatelessWidget {
           controller: controller.scrollController,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            mainAxisExtent: 310,
+            mainAxisExtent: 290,
           ),
           itemCount: controller.paginationStatus == Status.loading
               ? controller.searchResponse!.data.products.length + 1

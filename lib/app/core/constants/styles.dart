@@ -139,6 +139,12 @@ class Styles {
         fontFamily: fontFamily,
       );
 
+        static TextStyle get styleRegular40 => TextStyle(
+        fontSize: 40,
+        fontWeight: FontWeight.w400,
+        fontFamily: fontFamily,
+      );
+
   //
   //
   //

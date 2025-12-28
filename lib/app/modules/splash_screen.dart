@@ -61,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: FadeIn(
           duration: const Duration(seconds: 2),
           child: const CustomAssetsImage(
-            imagePath: Assets.assetsImagesNewVersionEdit01,
+            imagePath: "assets/images/applogo.png",
             width: 200,
             height: 100,
           ),

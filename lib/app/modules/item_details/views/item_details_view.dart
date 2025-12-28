@@ -310,6 +310,7 @@ class ItemDetailsView extends StatelessWidget {
                                           ],
 
                                           sizer(),
+
                                           relatedItems(controller),
                                         ],
                                       ),
@@ -459,6 +460,9 @@ class ItemDetailsView extends StatelessWidget {
   // }
 
   Widget relatedItems(ItemDetailsController controller) {
+    if (controller.item.value?.relatedItems.isEmpty ?? true) {
+      return const SizedBox();
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
