@@ -159,6 +159,11 @@ flutter:
           weight: 600
         - asset: assets/fonts/Inter_18pt-ExtraBold.ttf
           weight: 800
+    - family: number
+      fonts:
+        - asset: assets/fonts/Rajdhani-SemiBold.ttf
+          
+        
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -1,15 +1,19 @@
+import 'package:customer/app/core/constants/styles.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/widgets/common/custom_asset_image.dart';
+import '../models/transaction_model.dart';
 import 'time_transaction_widget.dart';
 
 class TransactionCardWidget extends StatelessWidget {
   const TransactionCardWidget({
     super.key,
+    required this.transaction,
   });
-
+  final WalletTransaction transaction;
   @override
   Widget build(BuildContext context) {
+    final isCredit = transaction.credit > 0;
     return Container(
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
@@ -24,22 +28,24 @@ class TransactionCardWidget extends StatelessWidget {
           ),
         ],
       ),
-      // assets/images/new_version/paid_invoice.png
       child: Row(
         children: [
-          const CustomAssetsImage(
-            imagePath: 'assets/images/new_version/basil_invoice.png',
+          CustomAssetsImage(
+            imagePath: isCredit
+                ? 'assets/images/new_version/paid_invoice.png'
+                : 'assets/images/new_version/basil_invoice.png',
             width: 50,
             height: 50,
           ),
           const SizedBox(width: 10),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Invoice 1234567890'),
+                Text(transaction.description ?? ''),
                 DateTimeInlineWidget(
-                    dateText: '12/2/2023', timeText: '20:12 AM'),
+                    dateText: transaction.date ?? '',
+                    timeText: transaction.time ?? ''),
               ],
             ),
           ),
@@ -47,8 +53,8 @@ class TransactionCardWidget extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
             decoration: BoxDecoration(
-              // #f4f8ec
-              color: const Color(0xffe8e8eb),
+              color:
+                  isCredit ? const Color(0xfff4f8ec) : const Color(0xffe8e8eb),
               borderRadius: BorderRadius.circular(30),
               border: Border.all(color: Colors.grey.shade100),
               boxShadow: [
@@ -59,7 +65,28 @@ class TransactionCardWidget extends StatelessWidget {
                 ),
               ],
             ),
-            child: const Text('123'),
+            child: Row(
+              children: [
+                Text(
+                  transaction.debit > 0
+                      ? '${transaction.debit}'
+                      : '${transaction.credit}',
+                  style: Styles.styleRegular15.copyWith(
+                    color: const Color(0xff1c1c38),
+                    fontFamily: 'number',
+                  ),
+                ),
+                const SizedBox(width: 2),
+                CustomAssetsImage(
+                  imagePath: 'assets/images/SAR.png',
+                  width: 15,
+                  height: 15,
+                  imageColor: isCredit
+                      ? const Color(0xff95be3d)
+                      : const Color(0xff1c1c38),
+                ),
+              ],
+            ),
           )
         ],
       ),
