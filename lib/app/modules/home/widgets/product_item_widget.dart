@@ -42,7 +42,7 @@ class ProductItemWidget extends StatelessWidget {
               Stack(
                 children: [
                   Container(
-                    height: 180,
+                    height: 230,
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(
                         Radius.circular(AppSizes.borderRadius),
@@ -93,11 +93,11 @@ class ProductItemWidget extends StatelessWidget {
                       ),
                       const SizedBox(height: 6),
                     ],
-                    Text(
-                      '${item.previousPrice == 0 ? item.price : item.previousPrice} ${Config().currency}',
-                      maxLines: 1,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                    // Text(
+                    //   '${item.previousPrice == 0 ? item.price : item.previousPrice} ${Config().currency}',
+                    //   maxLines: 1,
+                    //   style: const TextStyle(fontWeight: FontWeight.bold),
+                    // ),
                   ],
                 ),
               )

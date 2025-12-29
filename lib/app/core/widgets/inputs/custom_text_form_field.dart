@@ -32,6 +32,7 @@ class CustomTextFormFieldWidget extends StatefulWidget {
   final bool? disableText;
   final Widget? subtitle;
   final int? maxLength;
+  final TextInputAction? textInputAction;
 
   const CustomTextFormFieldWidget({
     super.key,
@@ -64,6 +65,7 @@ class CustomTextFormFieldWidget extends StatefulWidget {
     this.disableText = false,
     this.subtitle,
     this.maxLength,
+    this.textInputAction,
   });
 
   @override
@@ -113,6 +115,7 @@ class _CustomTextFormFieldWidgetState extends State<CustomTextFormFieldWidget> {
         ),
         const SizedBox(height: 5),
         TextFormField(
+          textInputAction: widget.textInputAction,
           focusNode: widget.focusNode,
           textAlignVertical: widget.textAlignVertical,
           onFieldSubmitted: (v) {

@@ -293,7 +293,7 @@ const Map<String, String> ar = {
   "upload_files": "تحميل الملفات",
   "commercial_register_image": "صوره السجل التجاري",
   "tax_number_image": "الرقم الضريبي",
-  "address_image": "العنوان",
+  "address_image": "العنوان الوطني",
   "common.camera": "الكاميرا",
   "common.gallery": "المعرض",
   "common.delete_image": "حذف الصورة",
