@@ -9,6 +9,7 @@ import 'account/views/account_view.dart';
 import 'categories/views/categories_view.dart';
 import 'home/controllers/home_controller.dart';
 import 'home/views/home_view.dart';
+import 'invoice/controllers/invoice_controller.dart';
 import 'invoice/invoice_screen.dart';
 import 'offers/views/offers_view.dart';
 import 'order_module/orders/views/orders_view.dart';
@@ -34,7 +35,7 @@ class _BottomSheetScreenState extends State<BottomSheetScreen> {
           children: [
             const HomeView(),
             if ((LocalAuthInfo().readEmail() ?? "").isNotEmpty) ...[
-              const OrdersView(),
+              //  const OrdersView(),
               const InvoiceScreen(),
             ],
 
@@ -59,6 +60,14 @@ class _BottomSheetScreenState extends State<BottomSheetScreen> {
               if (homeController.loading.value == false) {
                 AppUtils.pageController.jumpToPage(value);
                 currentIndex = value;
+                if (value == 1 &&
+                    (LocalAuthInfo().readEmail() ?? "").isNotEmpty) {
+                  try {
+                    Get.find<InvoiceController>().getInvoices();
+                  } catch (e) {
+                    print("Error calling getInvoices on tab tap: $e");
+                  }
+                }
                 setState(() {});
               }
             },
@@ -86,18 +95,18 @@ class _BottomSheetScreenState extends State<BottomSheetScreen> {
                 label: "Home".tr,
               ),
               if ((LocalAuthInfo().readEmail() ?? "").isNotEmpty) ...[
-                BottomNavigationBarItem(
-                  icon: const CustomAssetsImage(
-                    imagePath: Assets.assetsImagesNewVersionHugeiconsDateTime,
-                    width: 25,
-                  ),
-                  activeIcon: const CustomAssetsImage(
-                    imagePath: Assets.assetsImagesNewVersionHugeiconsDateTime,
-                    width: 25,
-                    imageColor: Color(0xFF1C1C3A),
-                  ),
-                  label: "my_orders".tr,
-                ),
+                // BottomNavigationBarItem(
+                //   icon: const CustomAssetsImage(
+                //     imagePath: Assets.assetsImagesNewVersionHugeiconsDateTime,
+                //     width: 25,
+                //   ),
+                //   activeIcon: const CustomAssetsImage(
+                //     imagePath: Assets.assetsImagesNewVersionHugeiconsDateTime,
+                //     width: 25,
+                //     imageColor: Color(0xFF1C1C3A),
+                //   ),
+                //   label: "my_orders".tr,
+                // ),
                 BottomNavigationBarItem(
                   icon: const CustomAssetsImage(
                     imagePath: "assets/images/invoice.png",

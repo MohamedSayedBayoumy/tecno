@@ -240,45 +240,45 @@ class ItemDetailsView extends StatelessWidget {
                                             sizer(),
                                           ],
 
-                                          Row(
-                                            children: [
-                                              labelStyle(
-                                                text: "price".tr,
-                                                maxLines: 2,
-                                                style: Styles().subTitle,
-                                              ),
-                                              const Spacer(),
-                                              Obx(
-                                                () => labelStyle(
-                                                  text:
-                                                      '${controller.item.value?.item?.hasVariant == 1 ? controller.variantPrice.value : controller.item.value!.item!.price}  ${Config().currency}',
-                                                  maxLines: 2,
-                                                  style: Styles().normalCustom(
-                                                      color: secondaryColor,
-                                                      weight: FontWeight.bold,
-                                                      overflow: TextOverflow
-                                                          .ellipsis),
-                                                ),
-                                              ),
-                                              sizer(),
-                                              item.item?.previousPrice !=
-                                                          null &&
-                                                      item.item
-                                                              ?.previousPrice !=
-                                                          0.0
-                                                  ? labelStyle(
-                                                      text:
-                                                          '${item.item?.previousPrice ?? ''} ${Config().currency}',
-                                                      style: Styles().normalCustom(
-                                                          color: mainColor,
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .lineThrough),
-                                                    )
-                                                  : Container(),
-                                            ],
-                                          ),
-                                          // properties(),
+                                          // Row(
+                                          //   children: [
+                                          //     labelStyle(
+                                          //       text: "price".tr,
+                                          //       maxLines: 2,
+                                          //       style: Styles().subTitle,
+                                          //     ),
+                                          //     const Spacer(),
+                                          //     Obx(
+                                          //       () => labelStyle(
+                                          //         text:
+                                          //             '${controller.item.value?.item?.hasVariant == 1 ? controller.variantPrice.value : controller.item.value!.item!.price}  ${Config().currency}',
+                                          //         maxLines: 2,
+                                          //         style: Styles().normalCustom(
+                                          //             color: secondaryColor,
+                                          //             weight: FontWeight.bold,
+                                          //             overflow: TextOverflow
+                                          //                 .ellipsis),
+                                          //       ),
+                                          //     ),
+                                          //     sizer(),
+                                          //     item.item?.previousPrice !=
+                                          //                 null &&
+                                          //             item.item
+                                          //                     ?.previousPrice !=
+                                          //                 0.0
+                                          //         ? labelStyle(
+                                          //             text:
+                                          //                 '${item.item?.previousPrice ?? ''} ${Config().currency}',
+                                          //             style: Styles().normalCustom(
+                                          //                 color: mainColor,
+                                          //                 decoration:
+                                          //                     TextDecoration
+                                          //                         .lineThrough),
+                                          //           )
+                                          //         : Container(),
+                                          //   ],
+                                          // ),
+                                          // // properties(),
 
                                           if (item.item!.hasVariant == 1) ...[
                                             optionsSelect(controller),
@@ -576,53 +576,125 @@ class ItemDetailsView extends StatelessWidget {
   //   );
   // }
 
+  // Widget buyOptions(ItemDetailsController controller) {
+  //   int totalStock = (controller.item.value!.item!.stock ?? 0);
+  //   return Container(
+  //     padding: const EdgeInsets.symmetric(horizontal: 10),
+  //     width: double.infinity,
+  //     decoration: BoxDecoration(
+  //       border: Border.all(color: Colors.grey),
+  //       borderRadius: BorderRadius.circular(10),
+  //       color: Colors.white,
+  //     ),
+  //     child: totalStock > 0
+  //         ? DropdownButton<int>(
+  //             isExpanded: true,
+  //             // Makes dropdown full width
+  //             value: controller.counter.value > totalStock
+  //                 ? 1 // Reset to 1 if counter exceeds stock
+  //                 : controller.counter.value,
+  //             onChanged: (int? newValue) {
+  //               if (newValue != null) {
+  //                 controller.counter.value = newValue;
+  //               }
+  //             },
+  //             items: List.generate(
+  //               totalStock,
+  //               (index) => DropdownMenuItem(
+  //                 value: index + 1,
+  //                 child: Text(
+  //                   '${index + 1}',
+  //                   textAlign: TextAlign.start,
+  //                 ),
+  //               ),
+  //             ),
+  //             underline: const SizedBox(),
+  //             // Remove default underline
+  //             selectedItemBuilder: (BuildContext context) => List.generate(
+  //               totalStock,
+  //               (index) => Align(
+  //                 alignment: language().tr == 'ar'
+  //                     ? Alignment.centerRight
+  //                     : Alignment.centerLeft,
+  //                 child: Text(
+  //                   '${'QTY'.tr}: ${controller.counter.value}',
+  //                   // Shows 'QTY' in dropdown
+  //                   style: Styles().subTitle,
+  //                 ),
+  //               ),
+  //             ),
+  //           )
+  //         : Padding(
+  //             padding: const EdgeInsets.symmetric(vertical: 10),
+  //             child: Center(
+  //               child: Text(
+  //                 'Out of Stock'.tr,
+  //                 style: Styles().subTitle.copyWith(color: Colors.red),
+  //               ),
+  //             ),
+  //           ),
+  //   );
+  // }
+
   Widget buyOptions(ItemDetailsController controller) {
     int totalStock = (controller.item.value!.item!.stock ?? 0);
+    int stock = controller.item.value?.item?.hasVariant == 1
+        ? controller.variantStock.value
+        : totalStock;
+
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       width: double.infinity,
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
+        border: Border.all(color: Colors.grey.shade300),
         borderRadius: BorderRadius.circular(10),
         color: Colors.white,
       ),
-      child: totalStock > 0
-          ? DropdownButton<int>(
-              isExpanded: true,
-              // Makes dropdown full width
-              value: controller.counter.value > totalStock
-                  ? 1 // Reset to 1 if counter exceeds stock
-                  : controller.counter.value,
-              onChanged: (int? newValue) {
-                if (newValue != null) {
-                  controller.counter.value = newValue;
-                }
-              },
-              items: List.generate(
-                totalStock,
-                (index) => DropdownMenuItem(
-                  value: index + 1,
-                  child: Text(
-                    '${index + 1}',
-                    textAlign: TextAlign.start,
-                  ),
+      child: stock > 0
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                labelStyle(
+                  text: 'QTY'.tr,
+                  style: Styles().subTitle,
                 ),
-              ),
-              underline: const SizedBox(),
-              // Remove default underline
-              selectedItemBuilder: (BuildContext context) => List.generate(
-                totalStock,
-                (index) => Align(
-                  alignment: language().tr == 'ar'
-                      ? Alignment.centerRight
-                      : Alignment.centerLeft,
-                  child: Text(
-                    '${'QTY'.tr}: ${controller.counter.value}',
-                    // Shows 'QTY' in dropdown
-                    style: Styles().subTitle,
-                  ),
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () => controller.minusCount(),
+                      icon: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: mainColor.withOpacity(0.1),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(Icons.remove, color: mainColor, size: 20),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Obx(
+                      () => Text(
+                        '${controller.counter.value}',
+                        style:
+                            Styles.styleBold18.copyWith(color: secondaryColor),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    IconButton(
+                      onPressed: () => controller.addCount(stock),
+                      icon: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: mainColor,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(Icons.add,
+                            color: Colors.white, size: 20),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
+              ],
             )
           : Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),

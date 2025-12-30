@@ -25,7 +25,7 @@ class RegisterController extends getData.GetxController {
       password,
       passwordConfirmation,
       countryCode,
-      address ;
+      address;
 
   TextEditingController phoneController = TextEditingController();
   TextEditingController businessNumberController = TextEditingController();
@@ -110,22 +110,13 @@ class RegisterController extends getData.GetxController {
           );
           print(response);
           if (response.data['status']) {
-            status = Status.loaded;
-            update();
-            LocalAuthInfo().saveInfo(
+            await LocalAuthInfo().saveInfo(
               email: email ?? '',
               password: password ?? '',
             );
-            AppPages.routes();
-            try {
-              // areYouSure(Get.context!, () {
-              //   Get.offAndToNamed(Routes.SIGN_IN);
-              // }, 'تأكيد'.tr, "تم ارسال بريد الكتروني اليك لتأكيد حسابك",false);
-              // controller.getProfile();
-              getData.Get.offAndToNamed(Routes.SIGN_IN);
-            } catch (e) {}
             status = Status.loaded;
             update();
+            getData.Get.offAllNamed(Routes.BOTTOMSHEET);
           } else {
             status = Status.fail;
             update();

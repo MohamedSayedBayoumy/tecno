@@ -10,6 +10,9 @@ class InvoiceController extends GetxController {
 
   Status status = Status.loading;
 
+  DateTime? fromDate;
+  DateTime? toDate;
+
   void selectInvoiceType(String type) {
     selectedInvoiceType = type;
     update();
@@ -17,25 +20,60 @@ class InvoiceController extends GetxController {
 
   @override
   void onInit() {
+    print(">>> InvoiceController initialized");
     super.onInit();
     getInvoices();
   }
 
   WalletStatementResponse? walletStatementResponse;
 
-  getInvoices() async {
+  getInvoices({DateTime? from, DateTime? to}) async {
+    print(">>> getInvoices called. status: loading");
     status = Status.loading;
     update();
     try {
-      final response =
-          await getRequest(urlExt: "/transactions", requireToken: true);
+      Map<String, dynamic> params = {};
+      if (from != null) {
+        params['from_date'] =
+            "${from.year}-${from.month.toString().padLeft(2, '0')}-${from.day.toString().padLeft(2, '0')}";
+      }
+      if (to != null) {
+        params['to_date'] =
+            "${to.year}-${to.month.toString().padLeft(2, '0')}-${to.day.toString().padLeft(2, '0')}";
+      }
+
+      final response = await getRequest(
+          urlExt: "/transactions", requireToken: true, params: params);
       print(">>>>>>>> response ${response.data}");
-      walletStatementResponse = WalletStatementResponse.fromJson(response.data);
+      if (response.data['status'] == true && response.data['data'] != null) {
+        try {
+          walletStatementResponse =
+              WalletStatementResponse.fromJson(response.data['data']);
+        } catch (e) {
+          print("Error parsing WalletStatementResponse: $e");
+          status = Status.fail;
+          update();
+          return;
+        }
+      }
       status = Status.loaded;
       update();
-    } on Exception catch (e) {
+    } catch (e) {
+      print("Error fetching invoices: $e");
       status = Status.fail;
       update();
     }
+  }
+
+  void applyFilter({DateTime? from, DateTime? to}) {
+    fromDate = from;
+    toDate = to;
+    getInvoices(from: from, to: to);
+  }
+
+  void resetFilter() {
+    fromDate = null;
+    toDate = null;
+    getInvoices();
   }
 }

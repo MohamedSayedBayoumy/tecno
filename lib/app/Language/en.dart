@@ -292,6 +292,13 @@ const Map<String, String> en = {
   "There are no previous requests": "There are no previous requests",
   "check internet connection": "check internet connection",
   "you haven't placed any orders yet.": "you haven't placed any orders yet.",
+  "you haven't placed any invoices yet.":
+      "you haven't placed any invoices yet.",
+  "Select All": "Select All",
+  "Select Period": "Select Period",
+  "From": "From",
+  "To": "To",
+  "Filter Transactions": "Filter Transactions",
   "when you do. their status will appear here":
       "when you do. their status will appear here",
   "explore our products": "explore our products",
@@ -321,4 +328,5 @@ const Map<String, String> en = {
   "common.camera": "Camera",
   "common.gallery": "Gallery",
   "common.delete_image": "Delete image",
+  "my_account_transactions": "my account transactions",
 };

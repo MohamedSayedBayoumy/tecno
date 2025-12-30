@@ -16,12 +16,17 @@ class ExploreMoreWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text("لقد وصلت لنهاية الصفحة استمر في التصفح!",
-            style: Styles().subTitle.copyWith(
-                color: mainColor, fontWeight: FontWeight.bold, fontSize: 20)),
+        Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: Text("لقد وصلت لنهاية الصفحة استمر في التصفح!",
+              style: Styles().subTitle.copyWith(
+                  color: mainColor, fontWeight: FontWeight.bold, fontSize: 20)),
+        ),
         // sectionHeader(text: "اكتشف المزيد" ?? ''),
         GridView.builder(
-          itemCount: controller.categories.length >= 4 ? 4: controller.categories.length,
+          itemCount: controller.categories.length >= 4
+              ? 4
+              : controller.categories.length,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

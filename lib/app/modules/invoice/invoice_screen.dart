@@ -23,7 +23,7 @@ class InvoiceScreen extends StatelessWidget {
             case Status.loading:
               return const Center(child: CustomLoading());
             case Status.loaded:
-              return const SingleChildScrollView(
+              return SingleChildScrollView(
                 child: Column(
                   children: [
                     InvoiceHeaderWidget(),

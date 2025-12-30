@@ -86,4 +86,5 @@ abstract class _Paths {
   static const reviews = '/reviews';
   static const cancelOrder = '/cancel-order';
   static const splash = '/splash';
+  
 }

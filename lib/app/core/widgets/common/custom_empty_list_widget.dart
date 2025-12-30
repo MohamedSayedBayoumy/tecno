@@ -7,8 +7,10 @@ import '../../constants/colors.dart';
 import '../buttons/custom_app_button.dart';
 
 class CustomEmptyList extends StatelessWidget {
+  final String? title;
   const CustomEmptyList({
     super.key,
+    this.title,
   });
 
   @override
@@ -27,7 +29,7 @@ class CustomEmptyList extends StatelessWidget {
           height: 20,
         ),
         Text(
-          "you haven't placed any orders yet.".tr,
+          title ?? "you haven't placed any orders yet.".tr,
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
         const SizedBox(

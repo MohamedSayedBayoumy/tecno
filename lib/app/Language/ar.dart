@@ -269,6 +269,12 @@ const Map<String, String> ar = {
   "There are no previous requests": "لا توجد طلبات سابقة",
   "check internet connection": "التحقق من اتصال الانترنت",
   "you haven't placed any orders yet.": "لم تقم بتقديم أي طلبات حتى الآن.",
+  "you haven't placed any invoices yet.": "لم تقم بتقديم أي فواتير حتى الآن.",
+  "Select All": "اختيار الكل",
+  "Select Period": "اختيار فترة",
+  "From": "من",
+  "To": "إلى",
+  "Filter Transactions": "فلترة المعاملات",
   "when you do. their status will appear here": "عندما تفعل, ستظهر حالتهم هنا.",
   "explore our products": "استكشف منتجاتنا",
   "warning": "تحذير",
@@ -297,4 +303,5 @@ const Map<String, String> ar = {
   "common.camera": "الكاميرا",
   "common.gallery": "المعرض",
   "common.delete_image": "حذف الصورة",
+  "my_account_transactions": "كشف حسابي"
 };

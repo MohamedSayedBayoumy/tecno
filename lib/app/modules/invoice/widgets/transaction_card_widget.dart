@@ -42,7 +42,16 @@ class TransactionCardWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(transaction.description ?? ''),
+                Text(
+                  transaction.client.isNotEmpty
+                      ? transaction.client
+                      : transaction.description,
+                  style: Styles.styleSemiBold14,
+                ),
+                Text(
+                  "#${transaction.code}",
+                  style: Styles.styleRegular13.copyWith(color: Colors.grey),
+                ),
                 DateTimeInlineWidget(
                     dateText: transaction.date ?? '',
                     timeText: transaction.time ?? ''),
@@ -68,8 +77,8 @@ class TransactionCardWidget extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  transaction.debit > 0
-                      ? '${transaction.debit}'
+                  transaction.total > 0
+                      ? '${transaction.total}'
                       : '${transaction.credit}',
                   style: Styles.styleRegular15.copyWith(
                     color: const Color(0xff1c1c38),
