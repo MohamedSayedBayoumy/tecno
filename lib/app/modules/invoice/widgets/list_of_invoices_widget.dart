@@ -1,4 +1,5 @@
 import 'package:customer/app/core/widgets/common/custom_empty_list_widget.dart';
+import 'package:customer/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,6 +25,11 @@ class ListOfInvoicesWidget extends StatelessWidget {
             },
             itemBuilder: (context, index) {
               return TransactionCardWidget(
+                  onTap: () {
+                    Get.toNamed(Routes.invoiceDetails,
+                        arguments: controller
+                            .walletStatementResponse!.transactions[index].id);
+                  },
                   transaction:
                       controller.walletStatementResponse!.transactions[index]);
             },

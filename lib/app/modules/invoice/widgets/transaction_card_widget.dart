@@ -9,12 +9,18 @@ class TransactionCardWidget extends StatelessWidget {
   const TransactionCardWidget({
     super.key,
     required this.transaction,
+    required this.onTap,
   });
   final WalletTransaction transaction;
+  final Function() onTap;
   @override
   Widget build(BuildContext context) {
     final isCredit = transaction.credit > 0;
-    return Container(
+    return InkWell(
+      onTap: () {
+        onTap();
+      },
+      child: Container(
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -99,6 +105,7 @@ class TransactionCardWidget extends StatelessWidget {
           )
         ],
       ),
+      )
     );
   }
 }

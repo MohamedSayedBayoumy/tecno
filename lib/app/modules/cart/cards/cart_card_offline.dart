@@ -1,4 +1,5 @@
-import 'package:customer/app/config/config.dart';
+// HIDDEN: Unused imports - commented out as per requirements
+// import 'package:customer/app/config/config.dart';
 import 'package:customer/app/core/constants/assets.dart';
 import 'package:customer/app/core/constants/colors.dart';
 import 'package:customer/app/core/constants/styles.dart';
@@ -9,9 +10,9 @@ import 'package:customer/app/models/cart/cart_off_line_model.dart';
 import 'package:customer/app/modules/cart/controllers/cart_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
-
-import '../../../core/constants/app_assets.dart';
+// HIDDEN: Unused imports - commented out as per requirements
+// import 'package:lottie/lottie.dart';
+// import '../../../core/constants/app_assets.dart';
 
 // ignore: must_be_immutable, camel_case_types
 class CartCardOffline extends StatefulWidget {
@@ -83,53 +84,54 @@ class _CartCardOfflineState extends State<CartCardOffline> {
                           style: Styles.styleRegular15
                               .copyWith(color: Colors.black)),
                       sizer(),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: labelStyle(
-                                text:
-                                    '${widget.item.price ?? 0} ${Config().currency}',
-                                maxLines: 5,
-                                style: Styles.styleBold15
-                                    .copyWith(color: Colors.black)),
-                          ),
-                          if (widget.item.shippingPrice != "0.0") ...[
-                            const SizedBox(width: 5.0),
-                            Expanded(
-                              flex: 2,
-                              child: Container(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 5),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(6),
-                                  border: Border.all(
-                                    color: Colors.amber.shade700,
-                                    width: .5,
-                                  ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Lottie.asset(
-                                      Assets
-                                          .assetsImagesNewVersionPackageDelivery,
-                                      width: 50.0,
-                                    ),
-                                    const SizedBox(width: 2.0),
-                                    Expanded(
-                                      child: Text(
-                                        'shipping_extra_desc'.trParams({
-                                          'fee': widget.item.shippingPrice
-                                              .toString(),
-                                        }),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ],
-                      ),
+                      // HIDDEN: Price display - commented out as per requirements
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //       child: labelStyle(
+                      //           text:
+                      //               '${widget.item.price ?? 0} ${Config().currency}',
+                      //           maxLines: 5,
+                      //           style: Styles.styleBold15
+                      //               .copyWith(color: Colors.black)),
+                      //     ),
+                      //     if (widget.item.shippingPrice != "0.0") ...[
+                      //       const SizedBox(width: 5.0),
+                      //       Expanded(
+                      //         flex: 2,
+                      //         child: Container(
+                      //           padding:
+                      //               const EdgeInsets.symmetric(vertical: 5),
+                      //           decoration: BoxDecoration(
+                      //             borderRadius: BorderRadius.circular(6),
+                      //             border: Border.all(
+                      //               color: Colors.amber.shade700,
+                      //               width: .5,
+                      //             ),
+                      //           ),
+                      //           child: Row(
+                      //             children: [
+                      //               Lottie.asset(
+                      //                 Assets
+                      //                     .assetsImagesNewVersionPackageDelivery,
+                      //                 width: 50.0,
+                      //               ),
+                      //               const SizedBox(width: 2.0),
+                      //               Expanded(
+                      //                 child: Text(
+                      //                   'shipping_extra_desc'.trParams({
+                      //                     'fee': widget.item.shippingPrice
+                      //                         .toString(),
+                      //                   }),
+                      //                 ),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ],
+                      // ),
                     ],
                   ),
                   sizer(),

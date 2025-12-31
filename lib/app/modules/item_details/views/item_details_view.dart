@@ -837,11 +837,12 @@ class ItemDetailsView extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis),
                           ),
                           const SizedBox(height: 4),
-                          Text(
-                            "${"price".tr} : ${variant.price} ${Config().currency}",
-                            style: const TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold),
-                          ),
+                          // HIDDEN: Price display for variants - commented out as per requirements
+                          // Text(
+                          //   "${"price".tr} : ${variant.price} ${Config().currency}",
+                          //   style: const TextStyle(
+                          //       fontSize: 14, fontWeight: FontWeight.bold),
+                          // ),
                           const SizedBox(height: 4),
                           // Stock Status
                           if (variant.stock == 0)

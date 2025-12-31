@@ -14,14 +14,26 @@ import 'package:flutter_offline/flutter_offline.dart';
 import 'package:get/get.dart';
 
 import '../controllers/cart_controller.dart';
-import '../widgets/bill_cart_view_widget.dart';
+// HIDDEN: Unused import - commented out as per requirements
+// import '../widgets/bill_cart_view_widget.dart';
 import '../widgets/card_footer_widget.dart';
+import '../../checkOut/controllers/check_out_controller.dart';
+// HIDDEN: Unused import - commented out as per requirements
+// import '../../checkOut/widgets/address_check_out_widget.dart';
 
 class CartView extends GetView<CartController> {
-  const CartView({super.key});
+  CartView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Initialize checkout data when view is built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final checkoutCtrl = Get.find<CheckOutController>();
+      if (checkoutCtrl.paymentMethods.isEmpty) {
+        checkoutCtrl.getPaymentMethods();
+      }
+      checkoutCtrl.getProfile();
+    });
     return OfflineBuilder(
       connectivityBuilder: (
         BuildContext context,
@@ -122,7 +134,9 @@ class CartView extends GetView<CartController> {
                                 ),
                               )
                             : CartFooterWidget(
-                                path: Routes.CHECK_OUT,
+                                // CHANGED: Instead of navigating to checkout, call placeOrder directly
+                                // path: Routes.CHECK_OUT,
+                                onTap: () => _handleCheckout(context),
                               ),
                       ),
                       body: Padding(
@@ -170,7 +184,14 @@ class CartView extends GetView<CartController> {
                                         const Divider(
                                           color: Colors.grey,
                                         ),
-                                        BillCartViewWidget()
+                                        // HIDDEN: Order details widget - commented out as per requirements
+                                        // BillCartViewWidget()
+                                        sizer(),
+                                        // HIDDEN: Address status widget - commented out as per requirements
+                                        // _buildAddressStatusWidget(),
+                                        sizer(),
+                                        // Payment methods widget
+                                        _buildPaymentOptionsWidget(),
                                       ],
                                     ),
                         ),
@@ -227,6 +248,208 @@ class CartView extends GetView<CartController> {
                     color: Colors.black,
                     weight: isTitle ? FontWeight.bold : FontWeight.w600))),
       ],
+    );
+  }
+
+  // HIDDEN: Address status widget - commented out as per requirements
+  // Widget _buildAddressStatusWidget() {
+  //   final checkoutCtrl = Get.find<CheckOutController>();
+  //   return Obx(
+  //     () => Container(
+  //       padding: const EdgeInsets.all(10),
+  //       decoration: BoxDecoration(
+  //         color: Colors.white,
+  //         borderRadius: BorderRadius.circular(10),
+  //         border: Border.all(
+  //           color: checkoutCtrl.haveMissingAddressData.value
+  //               ? Colors.red.shade700
+  //               : Colors.grey.shade200,
+  //         ),
+  //       ),
+  //       child: InkWell(
+  //         onTap: () {
+  //           Get.toNamed(Routes.ADDADDRESSES, arguments: true)!.then((result) {
+  //             if (result == true) {
+  //               checkoutCtrl.getData();
+  //             }
+  //           });
+  //         },
+  //         child: Row(
+  //           crossAxisAlignment: CrossAxisAlignment.center,
+  //           children: [
+  //             Icon(
+  //               Icons.location_on,
+  //               color: checkoutCtrl.haveMissingAddressData.value
+  //                   ? Colors.red.shade700
+  //                   : Colors.black,
+  //             ),
+  //             const SizedBox(width: 8),
+  //             Expanded(
+  //               child: Text(
+  //                 checkoutCtrl.haveMissingAddressData.value
+  //                     ? "must_complete_address".tr
+  //                     : "${"receive_place".tr}: ${checkoutCtrl.shippingInfo}",
+  //                 style: Styles.styleBold15.copyWith(
+  //                   color: checkoutCtrl.haveMissingAddressData.value
+  //                       ? Colors.red.shade700
+  //                       : Colors.black,
+  //                 ),
+  //               ),
+  //             ),
+  //             Text(
+  //               checkoutCtrl.haveMissingAddressData.value
+  //                   ? "complete".tr
+  //                   : "change".tr,
+  //               style: Styles.styleBold15.copyWith(
+  //                 color: checkoutCtrl.haveMissingAddressData.value
+  //                     ? Colors.red.shade700
+  //                     : Colors.black,
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  // Payment options widget (moved from check_out_view.dart)
+  Widget _buildPaymentOptionsWidget() {
+    final checkoutCtrl = Get.find<CheckOutController>();
+    return Container(
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.grey.shade200),
+      ),
+      child: Column(
+        children: [
+          Text(
+            "Payment Method".tr,
+            style: Styles.styleExtraBold18,
+          ),
+          const SizedBox(height: 8),
+          Obx(
+            () => ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: checkoutCtrl.paymentMethods.length,
+              itemBuilder: (context, index) {
+                final payment = checkoutCtrl.paymentMethods[index];
+                return _buildPaymentOption(
+                  key: UniqueKey(),
+                  title: payment.name!,
+                  description: payment.text!,
+                  value: payment.id.toString(),
+                  image: payment.photo ?? '',
+                  isSelected: checkoutCtrl.paymentMethod.value ==
+                      payment.id.toString(),
+                  onSelected: () {
+                    checkoutCtrl.selectPaymentMethod(payment.id.toString());
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Payment option widget (moved from check_out_view.dart)
+  Widget _buildPaymentOption({
+    required String title,
+    required String description,
+    required String value,
+    required String image,
+    required bool isSelected,
+    required VoidCallback onSelected,
+    Key? key,
+  }) {
+    final checkoutCtrl = Get.find<CheckOutController>();
+    return GestureDetector(
+      onTap: onSelected,
+      child: Obx(
+        () => Container(
+          key: key,
+          child: Row(
+            children: [
+              Radio<String>(
+                value: value,
+                groupValue: checkoutCtrl.paymentMethod.value,
+                activeColor: Colors.green,
+                onChanged: (v) => onSelected(),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    labelStyle(text: title, style: Styles.styleSemiBold16),
+                    labelStyle(
+                      text: description,
+                      style: Styles.styleRegular13,
+                      maxLines: 4,
+                    ),
+                  ],
+                ),
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: SizedBox(
+                  height: kTextTabBarHeight * 1.5,
+                  width: kTextTabBarHeight * 1.5,
+                  child: Image.network(
+                    image.isNotEmpty ? image : '',
+                    errorBuilder: (context, error, stackTrace) {
+                      return const SizedBox();
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Handle checkout button tap
+  void _handleCheckout(BuildContext context) {
+    final checkoutCtrl = Get.find<CheckOutController>();
+    
+    // Check if address is complete
+    if (checkoutCtrl.haveMissingAddressData.value == true) {
+      Get.snackbar(
+        'Error'.tr,
+        "must_complete_address".tr,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red.withOpacity(0.8),
+        colorText: Colors.white,
+        duration: const Duration(seconds: 4),
+      );
+      return;
+    }
+
+    // Check if payment method is selected
+    if (checkoutCtrl.paymentMethod.value.isEmpty) {
+      Get.snackbar(
+        'Error'.tr,
+        'Please choose the payment method that suits you'.tr,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red.withOpacity(0.8),
+        colorText: Colors.white,
+        duration: const Duration(seconds: 3),
+      );
+      return;
+    }
+
+    // Place order directly
+    checkoutCtrl.placeOrder(
+      context: context,
+      paymentMethodId: checkoutCtrl.paymentMethod.value,
+      cart: checkoutCtrl.cartData,
     );
   }
 }

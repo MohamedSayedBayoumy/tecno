@@ -90,6 +90,12 @@ class AccountController extends GetxController {
           path: Routes.notification,
           image: Assets.assetsImagesNewVersionBell,
         ),
+        ListTileModel(
+          true, // Available for all users - placed after notification
+          title: 'تواصل معنا',
+          path: Routes.CONTACT,
+          image: Assets.assetsImagesNewVersionLineMdPhoneCallLoop,
+        ),
       ];
 
   // void deleteAccount({

@@ -62,15 +62,15 @@ class CartFooterWidget extends StatelessWidget {
                         text: 'CHECKOUT'.tr,
                         style: Styles().normalCustom(
                             color: Colors.white, weight: FontWeight.bold)),
-                    sizer(
-                      height: 3,
-                    ),
-                    Obx(
-                      () => labelStyle(
-                          text: price,
-                          style: Styles().normalCustom(
-                              color: Colors.white, weight: FontWeight.bold)),
-                    ),
+                    // sizer(
+                    //   height: 3,
+                    // ),
+                    // Obx(
+                    //   () => labelStyle(
+                    //       text: price,
+                    //       style: Styles().normalCustom(
+                    //           color: Colors.white, weight: FontWeight.bold)),
+                    // ),
                   ],
                 ),
                 Container(

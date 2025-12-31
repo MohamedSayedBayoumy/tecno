@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../../../core/enum.dart';
 import '../../../data/online/DioRequest.dart';
 import '../../../data/online/end_points.dart';
+import '../models/transaction_details_model.dart';
 import '../models/transaction_model.dart';
 
 class InvoiceController extends GetxController {
@@ -26,6 +27,27 @@ class InvoiceController extends GetxController {
   }
 
   WalletStatementResponse? walletStatementResponse;
+  TransactionData? transactionData;
+
+  getTransactionDetails(int id) async {
+    print(">>> getTransactionDetails called for id: $id");
+    status = Status.loading;
+    update();
+    try {
+      final response =
+          await getRequest(urlExt: "/transaction/$id", requireToken: true);
+      print(">>>>>>>> response ${response.data}");
+      if (response.data['status'] == true && response.data['data'] != null) {
+        transactionData = TransactionData.fromJson(response.data['data']);
+      }
+      status = Status.loaded;
+      update();
+    } catch (e) {
+      print("Error fetching transaction details: $e");
+      status = Status.fail;
+      update();
+    }
+  }
 
   getInvoices({DateTime? from, DateTime? to}) async {
     print(">>> getInvoices called. status: loading");

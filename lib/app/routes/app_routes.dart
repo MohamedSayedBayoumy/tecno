@@ -43,6 +43,8 @@ abstract class Routes {
   static const googleMapView = _Paths.googleMapView;
   static const brands = _Paths.brands;
   static const notification = _Paths.notification;
+  static const invoiceDetails = _Paths.invoiceDetails;
+  static const CONTACT = _Paths.CONTACT;
 }
 
 abstract class _Paths {
@@ -86,5 +88,7 @@ abstract class _Paths {
   static const reviews = '/reviews';
   static const cancelOrder = '/cancel-order';
   static const splash = '/splash';
+  static const invoiceDetails = '/invoice-details';
+  static const CONTACT = '/contact';
   
 }

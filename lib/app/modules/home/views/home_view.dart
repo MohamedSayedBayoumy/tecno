@@ -59,8 +59,8 @@ class HomeView extends GetView<HomeController> {
                           images(),
                           sizer(),
                           categories(context),
-                          sizer(),
-                          brands(context),
+                          // sizer(),
+                          // brands(context),
                           sizer(),
                           if (controller
                                   .home.value?.featuredProducts.isNotEmpty ??

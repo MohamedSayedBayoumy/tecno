@@ -5,6 +5,7 @@ import 'package:customer/app/modules/edit_profile.dart/bindings/edit_profile_bin
 import 'package:customer/app/modules/edit_profile.dart/views/edit_profile_screen.dart';
 import 'package:customer/app/modules/forgot_password/views/forgot_password_view.dart';
 import 'package:customer/app/modules/forgot_password/views/otp_view.dart';
+import 'package:customer/app/modules/invoice/invoice_details_screen.dart';
 import 'package:customer/app/modules/item_details/views/comments_screen.dart';
 import 'package:customer/app/modules/page/bindings/page_binding.dart';
 import 'package:customer/app/modules/reviews/bindings/reviews_binding.dart';
@@ -61,6 +62,7 @@ import '../modules/search/views/search_view.dart';
 import '../modules/vendor_details/views/vendor_details_view.dart';
 import '../modules/wishlist/bindings/wishlist_binding.dart';
 import '../modules/wishlist/views/wishlist_view.dart';
+import '../modules/contact/views/contact_view.dart';
 
 part 'app_routes.dart';
 
@@ -93,7 +95,7 @@ class AppPages {
         ),
         GetPage(
           name: _Paths.CART,
-          page: () => const CartView(),
+          page: () => CartView(),
           bindings: [CartBinding(), HomeBinding(), CheckOutBinding()],
         ),
         GetPage(
@@ -273,6 +275,11 @@ class AppPages {
           page: () => const GoogleMapView(isFullView: true),
         ),
         GetPage(
+          name: _Paths.invoiceDetails,
+          page: () => const InvoiceDetailsScreen(),
+          binding: InvoiceBinding(),
+        ),
+        GetPage(
           name: _Paths.BOTTOMSHEET,
           page: () => const BottomSheetScreen(),
           bindings: [
@@ -284,6 +291,10 @@ class AppPages {
             CategoriesBinding(),
             AccountBinding(),
           ],
+        ),
+        GetPage(
+          name: _Paths.CONTACT,
+          page: () => const ContactView(),
         ),
       ];
 }

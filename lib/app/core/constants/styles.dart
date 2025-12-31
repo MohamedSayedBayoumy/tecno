@@ -57,6 +57,12 @@ class Styles {
         fontFamily: fontFamily,
       );
 
+  static TextStyle get styleBold14 => TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w700,
+        fontFamily: fontFamily,
+      );
+
   static TextStyle get styleBold11 => TextStyle(
         fontSize: 11,
         fontWeight: FontWeight.w700,
@@ -75,8 +81,20 @@ class Styles {
         fontFamily: fontFamily,
       );
 
+  static TextStyle get styleBold16 => TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w700,
+        fontFamily: fontFamily,
+      );
+
   static TextStyle get styleSemiBold12 => TextStyle(
         fontSize: 12,
+        fontWeight: FontWeight.w600,
+        fontFamily: fontFamily,
+      );
+
+  static TextStyle get styleSemiBold10 => TextStyle(
+        fontSize: 10,
         fontWeight: FontWeight.w600,
         fontFamily: fontFamily,
       );
@@ -116,6 +134,12 @@ class Styles {
         fontFamily: fontFamily,
       );
 
+  static TextStyle get styleRegular14 => TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        fontFamily: fontFamily,
+      );
+
   static TextStyle get styleRegular10 => TextStyle(
         fontSize: 10,
         fontWeight: FontWeight.w400,
@@ -139,7 +163,7 @@ class Styles {
         fontFamily: fontFamily,
       );
 
-        static TextStyle get styleRegular40 => TextStyle(
+  static TextStyle get styleRegular40 => TextStyle(
         fontSize: 40,
         fontWeight: FontWeight.w400,
         fontFamily: fontFamily,
