@@ -33,3 +33,4 @@ class InvoiceQrCodeWidget extends StatelessWidget {
     );
   }
 }
+

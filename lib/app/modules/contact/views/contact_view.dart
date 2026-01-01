@@ -4,85 +4,112 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/styles.dart';
+import '../../../core/enum.dart';
 import '../../../core/widgets/common/app_bar/custom_app_bar.dart';
+import '../../../core/widgets/common/custom_failed_widget.dart';
+import '../../../core/widgets/common/custom_loading.dart';
 import '../../../core/widgets/common/sizer.dart';
+import '../../../models/contact/contact_info_model.dart';
+import '../controllers/contact_controller.dart';
 
-class ContactView extends StatelessWidget {
+class ContactView extends GetView<ContactController> {
   const ContactView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            CustomAppBar(
-              title: "مساعدة و دعم",
-              showCart: false,
-            ),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Column(
-                children: [
-                  _buildContactCard(
-                    icon: Icons.phone,
-                    iconColor: mainColor,
-                    title: "الادارة",
-                    subtitle: "0590148158",
-                    rightIcon: Icons.person_outline,
-                    onTap: () => _makePhoneCall("0590148158"),
-                  ),
-                  sizer(),
-                  _buildContactCard(
-                    icon: Icons.phone,
-                    iconColor: mainColor,
-                    title: "مبيعات الرياض",
-                    subtitle: "0591358436",
-                    rightIcon: Icons.headset_mic_outlined,
-                    onTap: () => _makePhoneCall("0591358436"),
-                  ),
-                  sizer(),
-                  _buildContactCard(
-                    icon: Icons.phone,
-                    iconColor: mainColor,
-                    title: "مبيعات جده",
-                    subtitle: "0591336529",
-                    rightIcon: Icons.headset_mic_outlined,
-                    onTap: () => _makePhoneCall("0591336529"),
-                  ),
-                  sizer(),
-                  _buildContactCard(
-                    icon: Icons.send,
-                    iconColor: mainColor,
-                    title: "البريد الالكتروني",
-                    subtitle: "Tecnofactoryplastic@gmail.com",
-                    rightIcon: Icons.email_outlined,
-                    rightIconColor: Colors.red,
-                    onTap: () => _sendEmail("Tecnofactoryplastic@gmail.com"),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 40),
-          ],
-        ),
+      body: GetBuilder<ContactController>(
+        builder: (controller) {
+          switch (controller.status) {
+            case Status.loading:
+              return const Center(child: CustomLoading());
+            case Status.loaded:
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    CustomAppBar(
+                      title: "مساعدة و دعم",
+                      showCart: false,
+                    ),
+                    const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Column(
+                        children: [
+                          ...controller.contactInfo.map((contact) {
+                            return Column(
+                              children: [
+                                _buildContactCard(
+                                  contactInfo: contact,
+                                ),
+                                sizer(),
+                              ],
+                            );
+                          }),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 40),
+                  ],
+                ),
+              );
+            case Status.fail:
+              return CustomFailedWidget(
+                onTap: () => controller.getContactInformation(),
+              );
+          }
+        },
       ),
     );
   }
 
   Widget _buildContactCard({
-    required IconData icon,
-    required Color iconColor,
-    required String title,
-    required String subtitle,
-    required IconData rightIcon,
-    Color? rightIconColor,
-    required VoidCallback onTap,
+    required ContactInfoModel contactInfo,
   }) {
+    // Determine if it's a phone number or email based on label or value
+    final isPhone = _isPhoneNumber(contactInfo.value);
+    final isEmail = _isEmail(contactInfo.value);
+    
+    // Determine icon and color based on type
+    IconData leftIcon;
+    Color iconColor;
+    IconData rightIcon;
+    Color? rightIconColor;
+    
+    if (isEmail) {
+      leftIcon = Icons.send;
+      iconColor = mainColor;
+      rightIcon = Icons.email_outlined;
+      rightIconColor = Colors.red;
+    } else if (isPhone) {
+      leftIcon = Icons.phone;
+      iconColor = mainColor;
+      // Determine right icon based on label
+      if (contactInfo.label.contains('ادارة') || 
+          contactInfo.label.contains('إدارة') ||
+          contactInfo.label.contains('Administration')) {
+        rightIcon = Icons.person_outline;
+      } else {
+        rightIcon = Icons.headset_mic_outlined;
+      }
+      rightIconColor = null;
+    } else {
+      // Default
+      leftIcon = Icons.info_outline;
+      iconColor = mainColor;
+      rightIcon = Icons.arrow_forward_ios_rounded;
+      rightIconColor = null;
+    }
+
     return InkWell(
-      onTap: onTap,
+      onTap: () {
+        if (isPhone) {
+          _makePhoneCall(contactInfo.value);
+        } else if (isEmail) {
+          _sendEmail(contactInfo.value);
+        }
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
         decoration: BoxDecoration(
@@ -107,7 +134,7 @@ class ContactView extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(
-                icon,
+                leftIcon,
                 color: iconColor,
                 size: 24,
               ),
@@ -118,12 +145,12 @@ class ContactView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title,
+                    contactInfo.label,
                     style: Styles.styleSemiBold16,
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    subtitle,
+                    contactInfo.value,
                     style: Styles.styleRegular14.copyWith(
                       color: Colors.grey.shade600,
                     ),
@@ -140,6 +167,17 @@ class ContactView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  bool _isPhoneNumber(String value) {
+    // Check if value contains only digits and possibly + or spaces
+    final phoneRegex = RegExp(r'^[\d\s\+\-\(\)]+$');
+    return phoneRegex.hasMatch(value.replaceAll(' ', ''));
+  }
+
+  bool _isEmail(String value) {
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return emailRegex.hasMatch(value);
   }
 
   Future<void> _makePhoneCall(String phoneNumber) async {

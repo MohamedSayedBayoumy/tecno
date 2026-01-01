@@ -54,4 +54,5 @@ class EndPoints {
   String notifications = '/notification/user-notifications';
   String comments = '/item-reviews';
   String wishList = '/wishlist';
+  String contactInformation = '/contact-information';
 }

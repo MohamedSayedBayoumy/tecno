@@ -62,6 +62,7 @@ import '../modules/search/views/search_view.dart';
 import '../modules/vendor_details/views/vendor_details_view.dart';
 import '../modules/wishlist/bindings/wishlist_binding.dart';
 import '../modules/wishlist/views/wishlist_view.dart';
+import '../modules/contact/bindings/contact_binding.dart';
 import '../modules/contact/views/contact_view.dart';
 
 part 'app_routes.dart';
@@ -295,6 +296,7 @@ class AppPages {
         GetPage(
           name: _Paths.CONTACT,
           page: () => const ContactView(),
+          binding: ContactBinding(),
         ),
       ];
 }
